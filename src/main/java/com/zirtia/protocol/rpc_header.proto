@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package codec;
+option java_package = "com.zirtia.rpc.protocol";
+option java_outer_classname = "RPCHeader";
+
+enum ResCode {
+    RES_SUCCESS = 0;
+    RES_FAIL = 1;
+}
+
+// 请求Header
+message RequestHeader {
+    string service_name = 1; // 服务名或接口名
+    string method_name = 2; // 方法名
+    uint64 call_id = 3; // 请求id
+    map<string, string> custom_param = 5; // 用户自定义参数
+}
+
+// 响应Header
+message ResponseHeader {
+    uint64 call_id = 1; // 请求Id
+    ResCode res_code = 2; // 返回码，0：成功，1：失败
+    string res_msg = 3; // 返回失败时的错误消息
+}
